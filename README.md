@@ -23,7 +23,7 @@ The workflow I'm using for building every feature of this API is:
 - [x] Create project scaffolding
 - [x] Add SwaggerUI to docker-compose
 - [x] Add Accommodation schema to yml
-- [ ] Add user authentication via API
+- [x] Add user authentication via API
 - [ ] Add Accommodations model, migration and factory
 - [ ] Add Locations model, migration and factory
 - [ ] Make users able to post an accommodation
