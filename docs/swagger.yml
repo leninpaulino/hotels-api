@@ -1,0 +1,75 @@
+openapi: 3.0.0
+info:
+  title: Trivago Hotel API
+  description: This is sample API for accommodation listings
+  version: 1.0
+components:
+  schemas:
+    Accommodation:
+      type: object
+      example: "item.json"
+      properties:
+        name:
+          type: string
+          minLength: 10
+          pattern: "^(?!.*(Free|Offer|Book|Website)).*$"
+          example: Example name
+        rating:
+          type: integer
+          minimun: 0
+          maximun: 5
+          example: 5
+        category:
+          type: string
+          enum: [hotel, alternative, hostel, lodge, resort, guesthouse]
+          example: hotel
+        location:
+          type: object
+          properties:
+            city:
+              type: string
+              example: Cuernavaca
+            state:
+              type: string
+              example: Morelos
+            country:
+              type: string
+              example: Mexico
+            zip_code:
+              type: integer
+              pattern: '^\d{5}$'
+              example: 62448
+            address:
+              type: string
+              example: Boulevard Díaz Ordaz No. 9 Cantarranas
+        image:
+          type: string
+          format: uri
+          example: image-url.com
+        reputation:
+          type: integer
+          minimun: 0
+          maximun: 1000
+          example: 8990
+        reputationBadge:
+          type: string
+          enum: [red, yellow, green]
+          example: green
+        price:
+          type: integer
+          example: 1000
+        availability:
+          type: integer
+          example: 10
+paths:
+  /accommodations:
+    get:
+      description: Returns all accommodations from the system that the user has access to
+      responses:
+        "200":
+          description: A list of accommodations
+    post:
+      description: Create a new accommodation
+      responses:
+        "200":
+          description: The accommodation has been successfully created.

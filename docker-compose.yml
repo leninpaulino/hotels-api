@@ -1,0 +1,10 @@
+version: "3.7"
+services:
+  swagger-ui:
+    image: swaggerapi/swagger-ui
+    ports:
+      - "8081:8080"
+    volumes:
+      - ./docs:/tmp
+    environment:
+      SWAGGER_JSON: /tmp/swagger.yml
