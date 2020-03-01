@@ -1,0 +1,6 @@
+{
+    "type": "https://example.com/probs/validation-error",
+    "title": "The accommodation data is not valid",
+    "detail": "One or more fields are invalid.",
+    "status": 400
+}

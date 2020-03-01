@@ -1,0 +1,6 @@
+{
+    "type": "https://example.com/probs/not-found",
+    "title": "The accommodation could not be found",
+    "detail": "There's no an accommodation that match the specified param(s).",
+    "status": 404
+}

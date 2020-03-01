@@ -1,0 +1,6 @@
+{
+    "type": "https://example.com/probs/not-found",
+    "title": "The resource could not be found",
+    "detail": "There's no resource that match the specified param(s).",
+    "status": 404
+}
