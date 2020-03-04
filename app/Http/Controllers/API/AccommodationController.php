@@ -81,6 +81,23 @@ class AccommodationController extends Controller
 
         return response()->noContent();
     }
+
+    /**
+     * Book a room from the given accommodation.
+     *
+     * @param  Accommodation $accommodation
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function book(Accommodation $accommodation)
+    {
+        $accommodation->availability--;
+
+        $accommodation->update();
+
+        return response()->noContent();
+    }
+
     public function validated()
     {
         $data = [

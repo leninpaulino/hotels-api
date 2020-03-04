@@ -103,6 +103,21 @@ class AccommodationTest extends TestCase
         ]);
     }
 
+    public function test_user_can_book_an_accommodation()
+    {
+        $accommodation = factory(Accommodation::class)->create(['availability' => 15]);
+
+        $this->user->accommodations()->save($accommodation);
+
+        $response = $this->postJson(route('accommodations.book', $accommodation->id));
+
+        $response->assertStatus(204);
+
+        $this->assertDatabaseHas('accommodations', [
+            'id' => $accommodation->id,
+            'availability' => 14,
+        ]);
+    }
     /**
      * Returns an array of valid data to be used when interacting with the API.
      */

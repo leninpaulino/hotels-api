@@ -31,4 +31,4 @@ The workflow I'm using for building every feature of this API is:
 - [x] Make users able to retrieve a single accommodation
 - [x] Make users able to update accommodations
 - [x] Make users able to delete accomodations
-- [ ] Add booking endpoint than whenever is called reduces the accommodation availability, and that fails if there is no availability. 
+- [x] Add booking endpoint than whenever is called reduces the accommodation availability, and that fails if there is no availability. 
