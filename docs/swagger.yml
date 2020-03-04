@@ -202,6 +202,20 @@ paths:
           $ref: "#/components/responses/UnauthorizedError"
         "404":
           $ref: "#/components/responses/NotFoundError"
+  /accommodations/{accommodationId}/book:
+    parameters:
+      - $ref: "#/components/parameters/AccommodationIdParam"
+    post:
+      description: Book an accommodation
+      responses:
+        "204":
+          description: You have successfully booked an accommodation.
+        "400":
+          $ref: "#/components/responses/ErrorDetails"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
   /problems:
     get:
       description: Get all the problems that could be expected from the API
