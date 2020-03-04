@@ -51,6 +51,23 @@ class AccommodationController extends Controller
         return new AccommodationResource($accommodation);
     }
 
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  Accommodation $accommodation
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Accommodation $accommodation)
+    {
+        $validatedData = $this->validated();
+
+        $accommodation->update(Arr::except($validatedData, ['location']));
+
+        $accommodation->location()->update($validatedData['location']);
+
+        return (new AccommodationResource($accommodation))->response()->setStatusCode(200);
+    }
+
     public function validated()
     {
         $data = [

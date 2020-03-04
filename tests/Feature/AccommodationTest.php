@@ -67,6 +67,22 @@ class AccommodationTest extends TestCase
         $response->assertJson($resourceResponse);
     }
 
+    public function test_user_can_update_an_accommodation()
+    {
+        $accommodation = $this->createAccommodation();
+
+        $accommodation->name = 'Updated Name';
+        $accommodation->location->city = 'Santo Domingo';
+
+        $resource = $this->createResource($accommodation)->response()->getData(true);
+
+        $response = $this->putJson(route('accommodations.update', $accommodation->id), $resource['data']);
+
+        $response->assertStatus(200);
+
+        $response->assertExactJson($resource);
+    }
+
 
     /**
      * Returns an array of valid data to be used when interacting with the API.
