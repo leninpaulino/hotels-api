@@ -55,6 +55,18 @@ class AccommodationTest extends TestCase
         $response->assertJsonCount(5, 'data');
     }
 
+    public function test_user_can_see_specific_accommodation()
+    {
+        $accommodation = $this->createAccommodation();
+
+        $response = $this->getJson(route('accommodations.show', $accommodation->id));
+
+        $response->assertStatus(200);
+
+        $resourceResponse = (new AccommodationResource($accommodation))->response()->getData(true);
+        $response->assertJson($resourceResponse);
+    }
+
 
     /**
      * Returns an array of valid data to be used when interacting with the API.

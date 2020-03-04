@@ -28,7 +28,7 @@ The workflow I'm using for building every feature of this API is:
 - [x] Add Locations model, migration and factory
 - [x] Make users able to post an accommodation
 - [x] Make users able to retrieve all accommodations
-- [ ] Make users able to retrieve a single accommodation
+- [x] Make users able to retrieve a single accommodation
 - [ ] Make users able to update accommodations
 - [ ] Make users able to delete accomodations
 - [ ] Add booking endpoint than whenever is called reduces the accommodation availability, and that fails if there is no availability. 

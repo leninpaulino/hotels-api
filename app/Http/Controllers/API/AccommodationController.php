@@ -40,6 +40,16 @@ class AccommodationController extends Controller
         return (new AccommodationResource($accommodation))->response()->setStatusCode(201);
     }
 
+    /**
+     * Display the specified resource.
+     *
+     * @param  Accommodation $accommodation
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Accommodation $accommodation)
+    {
+        return new AccommodationResource($accommodation);
+    }
 
     public function validated()
     {
