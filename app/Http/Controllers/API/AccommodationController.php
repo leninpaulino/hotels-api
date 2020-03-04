@@ -68,6 +68,19 @@ class AccommodationController extends Controller
         return (new AccommodationResource($accommodation))->response()->setStatusCode(200);
     }
 
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  Accommodation $accommodation
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Accommodation $accommodation)
+    {
+        $accommodation->delete();
+
+        return response()->noContent();
+    }
     public function validated()
     {
         $data = [

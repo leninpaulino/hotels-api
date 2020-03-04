@@ -83,6 +83,25 @@ class AccommodationTest extends TestCase
         $response->assertExactJson($resource);
     }
 
+    public function test_user_can_delete_an_accommodation()
+    {
+        $accommodation = $this->createAccommodation();
+
+        $accommodationId = $accommodation->id;
+        $locationId = $accommodation->location->id;
+
+        $response = $this->deleteJson(route('accommodations.destroy', $accommodation->id));
+
+        $response->assertStatus(204);
+
+        $this->assertDatabaseMissing('accommodations', [
+            'id' => $accommodationId,
+        ]);
+
+        $this->assertDatabaseMissing('locations', [
+            'id' => $locationId,
+        ]);
+    }
 
     /**
      * Returns an array of valid data to be used when interacting with the API.
