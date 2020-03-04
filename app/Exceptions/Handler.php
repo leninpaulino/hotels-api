@@ -4,6 +4,8 @@ namespace App\Exceptions;
 
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Validation\ValidationException;
+use ReflectionClass;
 
 class Handler extends ExceptionHandler
 {
@@ -50,6 +52,50 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        return parent::render($request, $exception);
+        $exception = $this->prepareException($exception);
+
+        if ($exception instanceof ValidationException) {
+            return $this->convertValidationExceptionToResponse($exception, $request);
+        }
+
+        return $this->prepareJsonResponse($request, $exception);
+    }
+
+    /**
+     * Convert the given exception to an array.
+     *
+     * @param  \Exception  $e
+     * @return array
+     */
+    protected function convertExceptionToArray(Exception $e)
+    {
+        $title = (new ReflectionClass(get_class($e)))->getShortName();
+
+        return [
+            'type' => url('/problems/'.$title),
+            'title' => $title,
+            'detail' => $e->getMessage(),
+            'status' => $this->isHttpException($e) ? $e->getStatusCode() : 500,
+        ];
+    }
+
+    /**
+     * Create a response object from the given validation exception.
+     *
+     * @param  \Illuminate\Validation\ValidationException  $e
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    protected function convertValidationExceptionToResponse(ValidationException $exception, $request)
+    {
+        $title = (new ReflectionClass(get_class($exception)))->getShortName();
+
+        return response()->json([
+            'title' => $title,
+            'type' => url('/problems/'.$title),
+            'detail' => $exception->getMessage(),
+            'status' => $exception->status,
+            'invalid-params' => $exception->errors(),
+        ], $exception->status);
     }
 }
