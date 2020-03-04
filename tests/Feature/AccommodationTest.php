@@ -40,6 +40,21 @@ class AccommodationTest extends TestCase
         $this->assertDatabaseHas('locations', $this->validFields()['location']);
     }
 
+    public function test_user_can_see_accommodations()
+    {
+        $accommodations = factory(Accommodation::class, 5)->create()->each(function ($accommodation) {
+            $accommodation->location()->save(factory(Location::class)->make());
+        });
+
+        $this->user->accommodations()->saveMany($accommodations);
+
+        $response = $this->getJson(route('accommodations.index'));
+
+        $response->assertStatus(200);
+
+        $response->assertJsonCount(5, 'data');
+    }
+
 
     /**
      * Returns an array of valid data to be used when interacting with the API.

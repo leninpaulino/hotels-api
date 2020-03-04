@@ -27,7 +27,7 @@ The workflow I'm using for building every feature of this API is:
 - [x] Add Accommodations model, migration and factory
 - [x] Add Locations model, migration and factory
 - [x] Make users able to post an accommodation
-- [ ] Make users able to retrieve all accommodations
+- [x] Make users able to retrieve all accommodations
 - [ ] Make users able to retrieve a single accommodation
 - [ ] Make users able to update accommodations
 - [ ] Make users able to delete accomodations
