@@ -17,4 +17,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::middleware('auth:api')->namespace('API')->group(function () {
+    Route::apiResource('accommodations', 'AccommodationController');
+    Route::post('accommodations/{accommodation}/book', 'AccommodationController@book')->name('accommodations.book');
+});
+
 Route::post('/register', 'Auth\RegisterController@register')->name('register');
