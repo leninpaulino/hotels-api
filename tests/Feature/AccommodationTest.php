@@ -118,6 +118,119 @@ class AccommodationTest extends TestCase
             'availability' => 14,
         ]);
     }
+
+    public function test_name_cannot_contain_invalid_words()
+    {
+        $response = $this->postJson(route('accommodations.store'), $this->validFields(['name' => 'Limited Offer']));
+
+        $this->assertResponseHasInvalidParam($response, 'name');
+    }
+
+    public function test_name_should_be_longer_than_10()
+    {
+        $response = $this->postJson(route('accommodations.store'), $this->validFields(['name' => 'too short']));
+
+        $this->assertResponseHasInvalidParam($response, 'name');
+    }
+
+    public function test_rating_should_be_less_than_or_equal_to_five()
+    {
+        $response = $this->postJson(route('accommodations.store'), $this->validFields(['rating' => 10]));
+
+        $this->assertResponseHasInvalidParam($response, 'rating');
+    }
+
+    public function test_rating_should_be_more_than_or_equal_to_zero()
+    {
+        $response = $this->postJson(route('accommodations.store'), $this->validFields(['rating' => -10]));
+
+        $this->assertResponseHasInvalidParam($response, 'rating');
+    }
+
+    public function test_image_should_be_a_valid_url()
+    {
+        $response = $this->postJson(route('accommodations.store'), $this->validFields(['image' => 'beautiful-room.jpg']));
+
+        $this->assertResponseHasInvalidParam($response, 'image_url');
+    }
+
+    public function test_category_should_be_valid_one()
+    {
+        $response = $this->postJson(route('accommodations.store'), $this->validFields(['category' => 'hotel*****']));
+
+        $this->assertResponseHasInvalidParam($response, 'category');
+    }
+
+    public function test_reputation_should_be_less_than_or_equal_to_1000()
+    {
+        $response = $this->postJson(route('accommodations.store'), $this->validFields(['reputation' => 1001]));
+
+        $this->assertResponseHasInvalidParam($response, 'reputation');
+    }
+
+    public function test_reputation_should_be_more_than_or_equal_to_zero()
+    {
+        $response = $this->postJson(route('accommodations.store'), $this->validFields(['reputation' => -100]));
+
+        $this->assertResponseHasInvalidParam($response, 'reputation');
+    }
+
+    public function test_reputation_badge_should_be_red_if_reputation_is_less_than_500()
+    {
+        $response = $this->postJson(route('accommodations.store'), $this->validFields(['reputation' => 255, 'reputationBadge' => 'green']));
+
+        $this->assertResponseHasInvalidParam($response, 'reputation_badge');
+    }
+
+    public function test_reputation_badge_should_be_yellow_if_reputation_is_less_than_799()
+    {
+        $response = $this->postJson(route('accommodations.store'), $this->validFields(['reputation' => 600, 'reputationBadge' => 'red']));
+
+        $this->assertResponseHasInvalidParam($response, 'reputation_badge');
+    }
+
+    public function test_reputation_badge_should_be_green_if_reputation_is_more_than_799()
+    {
+        $response = $this->postJson(route('accommodations.store'), $this->validFields(['reputation' => 999, 'reputationBadge' => 'yellow']));
+
+        $this->assertResponseHasInvalidParam($response, 'reputation_badge');
+    }
+
+    public function test_price_should_be_an_integer()
+    {
+        $response = $this->postJson(route('accommodations.store'), $this->validFields(['price' => 'super cheap']));
+
+        $this->assertResponseHasInvalidParam($response, 'price');
+    }
+
+    public function test_availability_should_be_an_integer()
+    {
+        $response = $this->postJson(route('accommodations.store'), $this->validFields(['availability' => 'a lot']));
+
+        $this->assertResponseHasInvalidParam($response, 'availability');
+    }
+
+    public function test_location_zipcode_should_be_five_digits()
+    {
+        $response = $this->postJson(route('accommodations.store'), $this->validFields(['location' => ['zip_code' => 123456]]));
+
+        $this->assertResponseHasInvalidParam($response, 'location.zip_code');
+    }
+
+    /**
+     * Helper method to assert a response includes the provided invalid param.
+     */
+    public function assertResponseHasInvalidParam(TestResponse $response, string $param): void
+    {
+        $response->assertStatus(422);
+
+        $response->assertJsonStructure([
+            'invalid-params' => [
+                $param,
+            ],
+        ]);
+    }
+
     /**
      * Returns an array of valid data to be used when interacting with the API.
      */
