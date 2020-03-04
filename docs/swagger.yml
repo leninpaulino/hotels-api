@@ -79,6 +79,21 @@ components:
         detail:
           type: string
           description: A human-readable explanation specific to this occurrence of the problem.
+    UserRegistration:
+      type: object
+      examples:
+        externalValue: "./user.json"
+      properties:
+        name:
+          type: string
+          description: User's name
+        email:
+          type: string
+          format: email
+          description: User's email
+        password:
+          type: string
+          description: User's password
   requestBodies:
     AccommodationBody:
       description: Accommodation to add to the system
@@ -87,6 +102,12 @@ components:
         "application/json":
           schema:
             $ref: "#/components/schemas/Accommodation"
+    UserRegistration:
+      description: User registration data
+      content:
+        "application/json":
+          schema:
+            $ref: "#/components/schemas/UserRegistration"
   parameters:
     ProblemTypeParam:
       name: type
@@ -238,5 +259,16 @@ paths:
           $ref: "#/components/responses/ErrorDetails"
         "404":
           $ref: "#/components/responses/NotFoundError"
+  /register:
+    post:
+      security: []
+      description: Register a new user in the API
+      requestBody:
+        $ref: "#/components/requestBodies/UserRegistration"
+      responses:
+        "201":
+          $ref: "#/components/responses/User"
+        "400":
+          $ref: "#/components/responses/ErrorDetails"
 security:
   - ApiTokenAuth: []
