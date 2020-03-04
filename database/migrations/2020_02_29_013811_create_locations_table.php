@@ -21,7 +21,7 @@ class CreateLocationsTable extends Migration
             $table->string('zip_code', 5);
             $table->string('address');
             $table->unsignedBigInteger('accommodation_id');
-            $table->foreign('accommodation_id')->references('id')->on('accommodations');
+            $table->foreign('accommodation_id')->references('id')->on('accommodations')->onDelete('cascade');
             $table->timestamps();
         });
     }
