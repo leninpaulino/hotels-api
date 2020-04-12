@@ -1,4 +1,4 @@
-# Trivago - Hotels API
+# Hotels API
 
 Create a basic Hotel API - Coding Challenge
 
